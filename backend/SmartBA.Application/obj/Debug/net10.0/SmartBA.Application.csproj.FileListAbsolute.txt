@@ -1,0 +1,15 @@
+D:\Projects\smartba-ai\backend\SmartBA.Application\bin\Debug\net10.0\SmartBA.Application.deps.json
+D:\Projects\smartba-ai\backend\SmartBA.Application\bin\Debug\net10.0\SmartBA.Application.dll
+D:\Projects\smartba-ai\backend\SmartBA.Application\bin\Debug\net10.0\SmartBA.Application.pdb
+D:\Projects\smartba-ai\backend\SmartBA.Application\bin\Debug\net10.0\SmartBA.Domain.dll
+D:\Projects\smartba-ai\backend\SmartBA.Application\bin\Debug\net10.0\SmartBA.Domain.pdb
+D:\Projects\smartba-ai\backend\SmartBA.Application\obj\Debug\net10.0\SmartBA.Application.csproj.AssemblyReference.cache
+D:\Projects\smartba-ai\backend\SmartBA.Application\obj\Debug\net10.0\SmartBA.Application.GeneratedMSBuildEditorConfig.editorconfig
+D:\Projects\smartba-ai\backend\SmartBA.Application\obj\Debug\net10.0\SmartBA.Application.AssemblyInfoInputs.cache
+D:\Projects\smartba-ai\backend\SmartBA.Application\obj\Debug\net10.0\SmartBA.Application.AssemblyInfo.cs
+D:\Projects\smartba-ai\backend\SmartBA.Application\obj\Debug\net10.0\SmartBA.Application.csproj.CoreCompileInputs.cache
+D:\Projects\smartba-ai\backend\SmartBA.Application\obj\Debug\net10.0\SmartBA..0CD57412.Up2Date
+D:\Projects\smartba-ai\backend\SmartBA.Application\obj\Debug\net10.0\SmartBA.Application.dll
+D:\Projects\smartba-ai\backend\SmartBA.Application\obj\Debug\net10.0\refint\SmartBA.Application.dll
+D:\Projects\smartba-ai\backend\SmartBA.Application\obj\Debug\net10.0\SmartBA.Application.pdb
+D:\Projects\smartba-ai\backend\SmartBA.Application\obj\Debug\net10.0\ref\SmartBA.Application.dll
