@@ -1,0 +1,689 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap');
+
+/* ==========================================
+   SMARTBA AI - AZURE THEME
+========================================== */
+
+.wrapper {
+  display: flex;
+  min-height: 100vh;
+  background: #f5f9fd;
+}
+
+/* ==========================================
+   SIDEBAR
+========================================== */
+
+.sidebar {
+  width: 280px !important;
+  height: 100vh;
+  background: linear-gradient(
+    180deg,
+    #0078d4 0%,
+    #005a9e 100%
+  ) !important;
+  transition: all 0.3s ease;
+  overflow: hidden;
+}
+
+.sidebar.collapsed {
+  width: 70px !important;
+}
+
+.sidebar-wrapper {
+  height: 100%;
+}
+
+/* ==========================================
+   LOGO
+========================================== */
+
+.logo {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 72px;
+  padding: 10px;
+}
+
+.logo img {
+  width: 52px;
+  height: 52px;
+  object-fit: contain;
+}
+
+/* ==========================================
+   MENU
+========================================== */
+
+.sidebar .nav {
+  display: flex;
+  flex-direction: column;
+  padding: 10px 8px;
+}
+
+.sidebar .nav li {
+  list-style: none;
+  margin-bottom: 6px;
+  display: block !important;
+  width: 100%;
+}
+
+.sidebar .nav li a {
+  display: flex;
+  align-items: center;
+  height: 46px;
+  gap: 12px;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 15px !important;
+  font-weight: 600;
+  color: white !important;
+  opacity: 0.95;  
+  text-decoration: none !important;
+  padding: 12px 18px;
+  border-radius: 10px;
+}
+
+.sidebar .nav li a:hover {
+  color: #ffffff !important;
+  background: rgba(255,255,255,.12);
+  transform: translateX(3px); 
+  text-decoration: none !important;
+}
+
+.sidebar .nav li a.active {
+  background: rgba(255,255,255,.18);
+  border-left: 4px solid #ffffff;
+  color: #ffffff !important;
+  font-weight: 700;
+}
+
+.sidebar .nav li i {
+  width: 20px;
+  text-align: center;
+  font-size: 18px;
+  color: #ffffff !important;
+}
+
+/* ==========================================
+   COLLAPSED SIDEBAR
+========================================== */
+
+.sidebar.collapsed .nav li a {
+  justify-content: center;
+}
+
+.sidebar.collapsed .nav li span {
+  display: none;
+}
+
+.sidebar.collapsed .nav li i {
+  font-size: 24px;
+}
+
+/* ==========================================
+   MAIN PANEL
+========================================== */
+
+.main-panel {
+  flex: 1;
+  width: calc(100% - 280px);
+  background: #f5f9fd;
+  transition: all 0.3s ease;
+}
+
+.main-panel.collapsed-panel {
+  width: calc(100% - 70px);
+}
+
+/* ==========================================
+   TOP BAR & NAVIGATION BAR
+========================================== */
+
+.top-bar {
+  height: 70px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 24px;
+  background: white;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.topbar-left {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.menu-toggle {
+  border: none;
+  background: transparent;
+  font-size: 28px;
+  color: #0078d4;
+  cursor: pointer;
+}
+
+.page-title {
+  margin: 0;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 22px;
+  font-weight: 600;
+  color: #0f172a;
+}
+
+.topbar-right {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  margin-left: auto;
+}
+
+/* ==========================================
+   SETTINGS STICKER & DROPDOWN PANEL
+========================================== */
+
+.settings-sticker-wrapper {
+  position: relative !important;
+  display: inline-block !important;
+
+  .btn-settings-sticker {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    background: #f8fafc;
+    border: 1px solid #cbd5e1;
+    padding: 6px 12px;
+    border-radius: 8px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+    cursor: pointer;
+    color: #334155;
+    font-weight: 500;
+    font-size: 13px;
+    transition: all 0.2s ease;
+
+    &:hover {
+      background: #0078D4;
+      color: #ffffff;
+      border-color: #0078D4;
+
+      .spin-icon {
+        transform: rotate(90deg);
+      }
+    }
+
+    .spin-icon {
+      font-size: 14px;
+      transition: transform 0.3s ease;
+    }
+  }
+
+  .settings-panel {
+    position: absolute !important;
+    top: 52px !important;
+    right: 0 !important;
+    width: 300px !important;
+    min-width: 300px !important;
+    display: block !important;
+    background: #ffffff !important;
+    border-radius: 12px !important;
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.15) !important;
+    border: 1px solid #e2e8f0 !important;
+    padding: 20px !important;
+    z-index: 9999 !important;
+
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-10px);
+    transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+
+    &.show {
+      opacity: 1 !important;
+      visibility: visible !important;
+      transform: translateY(0) !important;
+    }
+
+    .settings-header {
+      display: flex !important;
+      justify-content: space-between !important;
+      align-items: center !important;
+      width: 100% !important;
+      border-bottom: 1px solid #f1f5f9;
+      padding-bottom: 12px;
+      margin-bottom: 14px;
+
+      h4 {
+        font-size: 14px;
+        font-weight: 600;
+        color: #1e293b;
+        margin: 0;
+        letter-spacing: 0.3px;
+      }
+
+      .btn-close {
+        background: #f1f5f9;
+        border: none;
+        width: 28px;
+        height: 28px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 16px;
+        cursor: pointer;
+        color: #64748b;
+        transition: all 0.2s;
+
+        &:hover {
+          background: #e2e8f0;
+          color: #0f172a;
+        }
+      }
+    }
+
+    .settings-body {
+      display: block !important;
+      width: 100% !important;
+      font-size: 13px;
+      color: #475569;
+    }
+  }
+}
+
+/* ==========================================
+   USER PROFILE INFO
+========================================== */
+
+.user-info-group {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.welcome-text {
+  font-family: 'Montserrat', sans-serif !important;
+  text-align: right;
+  display: flex;
+  flex-direction: column;
+}
+
+.user-name {
+  font-size: 14px;
+  font-weight: 600;
+  color: #111827;
+}
+
+.user-email {
+  font-size: 12px;
+  color: #6b7280;
+}
+
+.user-avatar {
+  font-family: 'Montserrat', sans-serif;
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  background: #0078d4;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  font-weight: 700;
+  overflow: hidden;
+  cursor: pointer;
+}
+
+.user-avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* ==========================================
+   CONTENT & CARD
+========================================== */
+
+.content {
+  padding: 24px;
+  min-height: calc(100vh - 70px);
+  background: #f8fafc;
+}
+
+.card {
+  border: none !important;
+  border-radius: 16px !important;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05), 0 10px 24px rgba(0, 0, 0, 0.08);
+  transition: 0.2s ease;
+  position: relative !important;
+}
+
+.card:hover {
+  transform: translateY(-2px);
+}
+
+/* ==========================================
+   SUB-MENU & CUSTOMER TREE
+========================================== */
+
+.sub-menu {
+  list-style: none;
+  padding-left: 50px !important;
+  margin-top: 6px;
+  margin-bottom: 10px;
+}
+
+.sub-menu li {
+  margin-bottom: 8px;
+}
+
+.sub-menu a {
+  display: block;
+  text-decoration: none !important;
+  color: #ffffff !important;
+  font-size: 14px;
+  font-weight: 500;
+  opacity: .9;
+  padding: 6px 0;
+  transition: .2s;
+}
+
+.sub-menu a:hover {
+  opacity: 1;
+  transform: translateX(4px);
+}
+
+.customer-child {
+  margin-left: 20px;
+  border-left: 2px solid rgba(255,255,255,.20);
+  padding-left: 14px;
+}
+
+.customer-child a {
+  display: flex !important;
+  align-items: center;
+  gap: 10px;
+  white-space: nowrap;
+  color: white !important;
+  font-size: 14px !important;
+  font-weight: 500 !important;
+  text-decoration: none !important;
+  padding: 8px 0;
+  opacity: .9;
+}
+
+.customer-child a:hover {
+  opacity: 1;
+  transform: translateX(4px);
+}
+
+.customer-child i {
+  font-size: 14px !important;
+}
+
+.ms-auto {
+  margin-left: auto;
+}
+
+/* ==========================================
+   GLOBAL FORM CONTROLS & INPUT STYLES
+========================================== */
+
+body {
+  background: #f5f9fd;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  font-size: 0.95rem;
+  line-height: 1.6;
+  color: #202124;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+html, body {
+  font-family: 'Segoe UI', sans-serif;
+}
+
+.form-control, 
+.form-select, 
+textarea.form-control {
+  width: 100%;
+  padding: 10px 14px;
+  font-size: 0.95rem;
+  font-family: inherit;
+  color: #202124;
+  background-color: #ffffff;
+  border: 1px solid #d1d5db;
+  border-radius: 8px;
+  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.04), inset 0 1px 2px 0 rgba(0, 0, 0, 0.02);
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+
+  &::placeholder {
+    color: #9ca3af;
+    opacity: 1;
+  }
+
+  &:hover:not(:disabled):not(:focus) {
+    border-color: #9ca3af;
+    box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.06), inset 0 1px 2px 0 rgba(0, 0, 0, 0.02);
+  }
+
+  &:focus {
+    outline: none;
+    border-color: #0078D4;
+    background-color: #ffffff;
+    box-shadow: 0 0 0 3px rgba(0, 120, 212, 0.15), 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+  }
+
+  &:disabled, &[readonly] {
+    background-color: #f9fafb;
+    color: #6b7280;
+    border-color: #e5e7eb;
+    cursor: not-allowed;
+    box-shadow: none;
+  }
+}
+
+/* ==========================================
+   DROPDOWN & SELECT OPTIMIZATION (DROPLIST)
+========================================== */
+
+.form-select {
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3e%3cpath fill='none' stroke='%23343a40' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='m2 5 6 6 6-6'/%3e%3c/svg%3e");
+  background-repeat: no-repeat;
+  background-position: right 12px center;
+  background-size: 14px 10px;
+  padding-right: 36px;
+  cursor: pointer;
+
+  &:focus {
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3e%3cpath fill='none' stroke='%230078D4' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='m2 5 6 6 6-6'/%3e%3c/svg%3e");
+  }
+}
+
+/* ==========================================
+   CALENDAR & DATEPICKER CUSTOM STYLES
+========================================== */
+
+input[type="date"].form-control,
+.form-control.calendar-input {
+  position: relative;
+  cursor: pointer;
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' width='18' height='18' viewBox='0 0 24 24' fill='none' stroke='%236b7280' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3crect x='3' y='4' width='18' height='18' rx='2' ry='2'%3e%3c/rect%3e%3cline x1='16' y1='2' x2='16' y2='6'%3e%3c/line%3e%3cline x1='8' y1='2' x2='8' y2='6'%3e%3c/line%3e%3cline x1='3' y1='10' x2='21' y2='10'%3e%3c/line%3e%3c/svg%3e");
+  background-repeat: no-repeat;
+  background-position: right 14px center;
+  padding-right: 40px;
+
+  &::-webkit-calendar-picker-indicator {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    cursor: pointer;
+  }
+
+  &:focus {
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' width='18' height='18' viewBox='0 0 24 24' fill='none' stroke='%230078D4' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3crect x='3' y='4' width='18' height='18' rx='2' ry='2'%3e%3c/rect%3e%3cline x1='16' y1='2' x2='16' y2='6'%3e%3c/line%3e%3cline x1='8' y1='2' x2='8' y2='6'%3e%3c/line%3e%3cline x1='3' y1='10' x2='21' y2='10'%3e%3c/line%3e%3c/svg%3e");
+  }
+}
+
+.form-control.is-invalid,
+input.ng-invalid.ng-touched,
+textarea.ng-invalid.ng-touched {
+  border-color: #d93025 !important;
+  background-color: #fff8f8;
+  box-shadow: 0 1px 2px 0 rgba(217, 48, 37, 0.05), 0 0 0 3px rgba(217, 48, 37, 0.12) !important;
+
+  &:focus {
+    border-color: #d93025 !important;
+    box-shadow: 0 0 0 3px rgba(217, 48, 37, 0.2) !important;
+  }
+}
+
+/* ==========================================
+   INPUT GROUP CUSTOM (TAX CODE LOOKUP)
+========================================== */
+
+.input-group-custom {
+  display: flex !important;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+
+  .form-control {
+    flex: 1;
+    border-radius: 8px !important; 
+  }
+
+  .btn-lookup-icon {
+    flex: 0 0 44px;
+    height: 42px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #f3f4f6;
+    border: 1px solid #d1d5db;
+    border-radius: 8px !important;
+    color: #374151;
+    cursor: pointer;
+    transition: all 0.2s ease;
+
+    &:hover {
+      background-color: #0078D4;
+      color: #ffffff;
+      border-color: #0078D4;
+    }
+
+    .spin-icon {
+      animation: spin 1s linear infinite;
+      display: inline-block;
+    }
+  }
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* ==========================================
+   STATUS & TABLE BUTTONS
+========================================== */
+
+.status-active {
+  background: #dcfce7;
+  color: #15803d;
+  padding: 4px 10px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.status-inactive {
+  background: #fee2e2;
+  color: #b91c1c;
+  padding: 4px 10px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.code-link {
+  color: #0078d4;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.code-link:hover {
+  color: #106ebe;
+  text-decoration: underline;
+}
+
+.action-buttons {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 6px;
+}
+
+.edit-btn,
+.delete-btn {
+  width: 30px;
+  height: 30px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: none;
+  border-radius: 6px;
+  background: transparent;
+  cursor: pointer;
+  padding: 0;
+}
+
+.edit-btn i,
+.delete-btn i {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 15px;
+  line-height: 1;
+}
+
+.edit-btn:hover {
+  background: rgba(0, 120, 212, 0.12);
+}
+
+.delete-btn:hover {
+  background: rgba(220, 38, 38, 0.12);
+}
+
+.text-center {
+  text-align: center;
+}
+
+/* ==========================================
+   SETTINGS STICKER BOTTOM RIGHT
+========================================== */
+
+.settings-sticker-wrapper.settings-bottom-right {
+  position: absolute !important;
+  right: 24px !important;
+  bottom: 24px !important;
+  z-index: 100 !important;
+
+  .settings-panel {
+    position: absolute !important;
+    bottom: 50px !important;
+    top: auto !important;
+    right: 0 !important;
+    left: auto !important;
+    width: 300px !important;
+  }
+}

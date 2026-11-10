@@ -1,0 +1,108 @@
+:host {
+  display: block;
+}
+
+.grid-toolbar {
+    display: flex;
+    align-items: center;
+
+    justify-content: flex-start;
+
+    gap: 10px;
+
+    margin-bottom: 16px;
+}
+
+
+
+
+.ag-theme-quartz {
+  --ag-font-family: 'Montserrat', sans-serif;
+
+  --ag-header-height: 50px;
+  --ag-row-height: 60px;
+
+  --ag-border-color: #e5e7eb;
+  --ag-header-background-color: #f8fafc;
+  --ag-background-color: #ffffff;
+
+  border-radius: 12px;
+  overflow: hidden;
+
+  box-shadow:
+    0 2px 6px rgba(0,0,0,.07),
+    0 8px 24px rgba(0,0,0,.04);
+}
+
+.ag-theme-quartz .ag-row:hover {
+  background: linear-gradient(
+    90deg,
+    #edf6ff,
+    #f4f9ff
+  ) !important;
+}
+
+.ag-theme-quartz .ag-row-selected {
+  background: #5e56fb !important;
+}
+
+.ag-theme-quartz .ag-header {
+  font-weight: 600;
+  font-size: 14px;
+}
+
+.ag-theme-quartz .ag-header-cell {
+  color: #334155;
+}
+
+.ag-theme-quartz .ag-row-even {
+  background: #ffffff;
+}
+
+.ag-theme-quartz .ag-row-odd {
+  background: #fafbfc;
+}
+
+.ag-row:hover {
+  background: #e8f3ff !important;
+  cursor: pointer;
+  transition: all .15s ease;
+}
+
+.ag-theme-quartz .ag-cell {
+  font-size: 20px;
+  color: #111827;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+}
+
+.ag-header-cell-text {
+  font-size: 15px;
+  font-weight: 700;
+  color: #0f172a;
+}
+
+.ag-cell {
+  font-size: 17px;
+  font-weight: 500;
+  color: #111827;
+}
+
+.ag-row:hover {
+  background: #edf6ff !important;
+  cursor: pointer;
+}
+
+.ag-theme-quartz .ag-cell {
+  font-size: 17px;
+  color: #111827;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  
+  /* Thêm các dòng này để tự động ẩn bớt chuỗi quá dài nếu không muốn bị vỡ layout */
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}

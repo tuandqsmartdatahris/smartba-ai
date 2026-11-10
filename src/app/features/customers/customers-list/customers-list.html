@@ -1,0 +1,48 @@
+<div class="customer-page">
+
+  <div class="page-header">
+
+    <div>
+
+      <h1 class="page-title">
+        Customer Management
+      </h1>
+
+      <p class="page-subtitle">
+        Manage customer information
+      </p>
+
+    </div>
+
+
+
+  </div>
+
+    <div class="toolbar-container">
+      <!-- Ô tìm kiếm -->
+      <div class="search-box-wrapper">
+        <i class="bi bi-search search-icon"></i>
+        <input type="text" class="form-control search-input" placeholder="Search..." />
+      </div>
+
+      <!-- Nút Export -->
+      <button class="btn btn-secondary-custom" type="button">
+        <i class="bi bi-file-earmark-spreadsheet"></i> 
+        <span>Export</span>
+      </button>
+
+      <!-- Nút New -->
+      <button class="btn btn-primary-custom" type="button" routerLink="/customers/create">
+        <i class="bi bi-plus-lg"></i> 
+        <span>New</span>
+      </button>
+    </div>
+
+  <app-smart-grid
+    [rowData]="customers"
+    [columnDefs]="columns">
+  </app-smart-grid>
+
+  
+
+</div>

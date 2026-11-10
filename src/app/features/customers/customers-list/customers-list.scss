@@ -1,0 +1,66 @@
+.toolbar-container {
+  display: flex;
+  align-items: center;
+  gap: 10px; // Khoảng cách khít giữa ô search và các nút
+  margin-bottom: 20px;
+  width: 100%;
+
+.search-box-wrapper {
+  position: relative;
+  display: inline-block;
+  width: 260px; // Điều chỉnh chiều rộng khung tìm kiếm tùy ý bạn
+
+  .search-icon {
+    position: absolute;
+    top: 50%;
+    left: 14px;
+    transform: translateY(-50%);
+    color: #9ca3af;
+    pointer-events: none; // Giúp click chuột xuyên qua icon vào ô input
+    font-size: 14px;
+  }
+
+  .search-input {
+    padding-left: 38px !important; // Tạo khoảng đệm bên trái để chữ không đè lên icon
+  }
+}
+
+  // Định dạng chung cho cả 2 nút bấm nằm trên cùng một hàng
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    padding: 9px 18px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    border-radius: 6px;
+    cursor: pointer;
+    border: 1px solid transparent;
+    transition: all 0.2s ease;
+    white-space: nowrap; // Không bị xuống dòng chữ trong nút
+
+    i {
+      font-size: 1rem;
+    }
+  }
+
+  .btn-secondary-custom {
+    background-color: #F3F5F7;
+    color: #374151;
+    border-color: #d1d5db;
+
+    &:hover {
+      background-color: #e5e7eb;
+    }
+  }
+
+  .btn-primary-custom {
+    background-color: #0078D4;
+    color: #ffffff;
+
+    &:hover {
+      background-color: #106ebe;
+    }
+  }
+}

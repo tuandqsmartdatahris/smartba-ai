@@ -1,0 +1,196 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap');
+
+.otp-page {
+  min-height: 100vh;
+
+  background: radial-gradient(
+      circle at top left,
+      rgba(36, 160, 255, 0.9),
+      transparent 40%
+    ),
+    linear-gradient(
+      135deg,
+      #0078d4,
+      #005a9e
+    );
+}
+
+.otp-card {
+
+  width: 420px;
+
+  background: white;
+
+  border-radius: 20px;
+
+  padding: 40px;
+
+  box-shadow:
+    0 20px 40px rgba(0,0,0,.15);
+
+  font-family:
+    'Montserrat',
+    sans-serif;
+}
+
+.otp-header {
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.otp-header img {
+  width: 72px;
+  height: 72px;
+
+  object-fit: contain;
+
+  margin-bottom: 15px;
+}
+
+.otp-header h2 {
+  margin-bottom: 10px;
+
+  color: #0f172a;
+
+  font-size: 28px;
+  font-weight: 700;
+}
+
+.otp-header p {
+  color: #64748b;
+  font-size: 14px;
+}
+
+.form-group {
+  margin-bottom: 20px;
+}
+
+.form-group label {
+
+  display: block;
+
+  margin-bottom: 8px;
+
+  font-size: 14px;
+  font-weight: 600;
+
+  color: #334155;
+}
+
+.form-group input {
+
+  width: 100%;
+
+  padding: 14px 16px;
+
+  border: 1px solid #dbe2ea;
+
+  border-radius: 12px;
+
+  font-size: 15px;
+
+  box-sizing: border-box;
+
+  transition: .2s;
+}
+
+.form-group input:focus {
+
+  outline: none;
+
+  border-color: #0078d4;
+
+  box-shadow:
+    0 0 0 3px rgba(0,120,212,.15);
+}
+
+.verify-btn {
+
+  width: 100%;
+
+  border: none;
+
+  border-radius: 12px;
+
+  background: #0078d4;
+
+  color: white;
+
+  font-size: 15px;
+  font-weight: 600;
+
+  padding: 15px;
+
+  cursor: pointer;
+
+  transition: .2s;
+}
+
+.verify-btn:hover {
+
+  background: #106ebe;
+
+  transform: translateY(-1px);
+}
+
+.otp-footer {
+
+  margin-top: 20px;
+
+  text-align: center;
+
+  color: #64748b;
+
+  font-size: 14px;
+}
+
+.otp-footer a {
+
+  cursor: pointer;
+
+  color: #0078d4;
+
+  margin-left: 5px;
+
+  text-decoration: none;
+
+  font-weight: 600;
+}
+
+
+.otp-page {
+  min-height: 100vh;
+  width: 100%;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  background:
+    radial-gradient(circle at top left,
+      rgba(255,255,255,.25),
+      transparent 35%),
+    linear-gradient(
+      135deg,
+      #4a90ff,
+      #0078d4,
+      #005a9e
+    );
+
+  padding: 24px;
+  box-sizing: border-box;
+}
+
+.otp-card {
+  width: 430px;
+  max-width: 100%;
+
+  background: #ffffff;
+
+  padding: 40px;
+
+  border-radius: 24px;
+
+  box-shadow:
+    0 20px 50px rgba(0,0,0,.15);
+}

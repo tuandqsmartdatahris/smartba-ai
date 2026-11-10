@@ -1,0 +1,63 @@
+<div class="otp-page">
+
+  <div class="otp-card">
+
+    <div class="otp-header">
+
+      <img
+        src="assets/img/new_logo.png"
+        alt="SmartBA AI">
+
+      <h2>Email Verification</h2>
+
+      <p>
+        Enter your email and verification code
+        to continue accessing SmartBA AI.
+      </p>
+
+    </div>
+
+    <div class="form-group">
+
+      <label>Email Address</label>
+
+      <input
+        type="email"
+        [(ngModel)]="email"
+        placeholder="Enter your email" />
+
+    </div>
+
+    <div class="form-group">
+
+      <label>Verification Code</label>
+
+      <input
+        type="text"
+        maxlength="6"
+        [(ngModel)]="otp"
+        placeholder="Enter 6-digit OTP" />
+
+    </div>
+
+    <button
+      class="verify-btn"
+      (click)="verifyOtp()">
+
+      Verify & Continue
+
+    </button>
+
+    <div class="otp-footer">
+
+      Didn't receive the code?
+
+      <a (click)="resendOtp()">
+        Resend OTP
+      </a>
+
+    </div>
+
+  </div>
+
+</div>

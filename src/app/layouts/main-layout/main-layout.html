@@ -1,0 +1,140 @@
+<div class="wrapper">
+
+  <!-- SIDEBAR -->
+  <div class="sidebar" [class.collapsed]="sidebarCollapsed">
+    <div class="sidebar-wrapper">
+      
+      <div class="logo">
+        <img src="assets/img/new_logo.png" alt="SmartBA AI">
+      </div>
+
+      <ul class="nav">
+        <!-- DASHBOARD -->
+        <li>
+          <a routerLink="/dashboard" routerLinkActive="active">
+            <i class="bi bi-speedometer2"></i>
+            <span *ngIf="!sidebarCollapsed">Dashboard</span>
+          </a>
+        </li>
+
+        <!-- CUSTOMERS -->
+        <li>
+          <a href="javascript:void(0)" (click)="toggleCustomerMenu()">
+            <i class="bi bi-people"></i>
+            <span *ngIf="!sidebarCollapsed">Customers</span>
+            <i *ngIf="!sidebarCollapsed" class="bi bi-chevron-down ms-auto"></i>
+          </a>
+        </li>
+
+        <li class="customer-child" *ngIf="customerExpanded && !sidebarCollapsed">
+          <a routerLink="/customers/list" routerLinkActive="active">
+            <i class="bi bi-list-ul"></i>
+            <span>Customer List</span>
+          </a>
+        </li>
+
+        <li class="customer-child" *ngIf="customerExpanded && !sidebarCollapsed">
+          <a routerLink="/customers/create" routerLinkActive="active">
+            <i class="bi bi-person-plus"></i>
+            <span>Create Customer</span>
+          </a>
+        </li>
+
+        <!-- PROJECTS -->
+        <li>
+          <a routerLink="/projects" routerLinkActive="active">
+            <i class="bi bi-folder"></i>
+            <span *ngIf="!sidebarCollapsed">Projects</span>
+          </a>
+        </li>
+
+        <!-- SURVEYS -->
+        <li>
+          <a routerLink="/surveys" routerLinkActive="active">
+            <i class="bi bi-card-checklist"></i>
+            <span *ngIf="!sidebarCollapsed">Surveys</span>
+          </a>
+        </li>
+
+        <!-- REQUIREMENTS -->
+        <li>
+          <a routerLink="/requirements" routerLinkActive="active">
+            <i class="bi bi-lightbulb"></i>
+            <span *ngIf="!sidebarCollapsed">Requirements</span>
+          </a>
+        </li>
+
+        <!-- BRD -->
+        <li>
+          <a routerLink="/brd" routerLinkActive="active">
+            <i class="bi bi-file-earmark-text"></i>
+            <span *ngIf="!sidebarCollapsed">BRD</span>
+          </a>
+        </li>
+      </ul>
+
+    </div>
+  </div>
+
+  <!-- MAIN PANEL -->
+  <div class="main-panel" [class.collapsed-panel]="sidebarCollapsed">
+
+    <!-- TOP BAR -->
+    <div class="top-bar">
+
+      <div class="topbar-left">
+        <button class="menu-toggle" (click)="toggleSidebar()" title="Thu gọn / Mở rộng Menu">
+          ☰
+        </button>
+        <h3 class="page-title">SmartBA AI</h3>
+      </div>
+
+      <!-- KHU VỰC PHẢI: SETTINGS STICKER & USER PROFILE -->
+      <div class="topbar-right">
+
+        <!-- Nút Settings Sticker & Panel Cài đặt -->
+        <div class="settings-sticker-wrapper">
+          <button type="button" class="btn-settings-sticker" (click)="toggleSettings()" title="System Settings">
+            <i class="bi bi-gear-fill spin-icon"></i>
+            <span class="sticker-label">Settings</span>
+          </button>
+
+          <!-- Bảng Panel trượt ra -->
+          <div class="settings-panel" [class.show]="isSettingsOpen">
+            <div class="settings-header">
+              <h4>SIDEBAR FILTERS</h4>
+              <button type="button" class="btn-close" (click)="toggleSettings()">
+                <i class="bi bi-x"></i>
+              </button>
+            </div>
+            <div class="settings-body">
+              <p>Tùy chỉnh giao diện hệ thống...</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Thông tin User -->
+        <div class="user-info-group">
+          <div class="welcome-text">
+            <div class="user-name">Welcome, {{ userName }}</div>
+            <div class="user-email">{{ email }}</div>
+          </div>
+
+          <div class="user-avatar">
+            <img *ngIf="avatarUrl" [src]="avatarUrl" alt="Avatar" />
+            <span *ngIf="!avatarUrl">{{ userName?.charAt(0) }}</span>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+
+    <!-- CONTENT -->
+    <div class="content">
+      <router-outlet></router-outlet>
+    </div>
+
+  </div>
+
+</div>

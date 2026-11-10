@@ -1,0 +1,107 @@
+<div class="customer-create-container">
+  <!-- Tiêu đề trang -->
+  <div class="page-header">
+    <h2>Tạo mới khách hàng</h2>
+    <p class="page-subtitle">Nhập thông tin chi tiết để đăng ký khách hàng mới vào hệ thống quản trị.</p>
+  </div>
+
+  <!-- Thẻ Card bọc form chuẩn Microsoft Fluent UI -->
+  <div class="card-surface">
+    <!-- ĐÃ THÊM [formGroup]="customerForm" VÀO ĐÂY -->
+    <form [formGroup]="customerForm" class="azure-form" (ngSubmit)="onSave()">
+      <div class="form-grid">
+        <!-- Mã số thuế -->
+        <div class="form-group">
+            <label class="form-label">Mã số thuế <span class="required">*</span></label>
+
+            <div class="input-group-custom">
+              <input 
+                type="text" 
+                class="form-control" 
+                formControlName="masothue" 
+                placeholder="Nhập mã số thuế doanh nghiệp..." 
+                (keyup.enter)="lookupTaxCode()" />
+                <!-- Icon nhỏ bên trong ô input để người dùng nhận biết có thể tra cứu -->
+                <button type="button" class="btn-lookup-icon" (click)="lookupTaxCode()" title="Bấm để tra cứu API">
+                    <i class="bi" [ngClass]="isLoading ? 'bi-arrow-repeat spin-icon' : 'bi-search'"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- Tên khách hàng -->
+        <div class="form-group">
+          <label class="form-label">Tên khách hàng <span class="required">*</span></label>
+          <!-- Đã bổ sung formControlName -->
+          <input type="text" class="form-control" formControlName="customerName" placeholder="Nhập tên công ty / đối tác..." />
+        </div>
+
+        <!-- Lĩnh vực -->
+        <div class="form-group">
+          <label class="form-label">Lĩnh vực (Industry)</label>
+          <!-- Đã bổ sung formControlName -->
+          <input type="text" class="form-control" formControlName="industry" placeholder="Ví dụ: Công nghệ thông tin, Sản xuất..." />
+        </div>
+
+        <!-- Người liên hệ -->
+        <div class="form-group">
+          <label class="form-label">Người liên hệ</label>
+          <input type="text" class="form-control" formControlName="contactName" placeholder="Họ và tên người đại diện..." />
+        </div>
+
+        <!-- Số điện thoại -->
+        <div class="form-group">
+          <label class="form-label">Số điện thoại</label>
+          <input type="text" class="form-control" formControlName="contactNumber" placeholder="Ví dụ: 0901234567..." />
+        </div>
+
+
+
+        <!-- Email liên hệ -->
+        <div class="form-group">
+          <label class="form-label">Email liên hệ</label>
+          <input type="email" class="form-control" formControlName="contactEmail" placeholder="name@company.com..." />
+        </div>
+      </div>
+
+      <!-- Địa chỉ -->
+        <div class="form-group full-width">
+          <label class="form-label">Địa chỉ</label>
+          <input type="text" class="form-control" formControlName="contactAddress" placeholder="Ví dụ: 123 Nguyễn Văn Trỗi" />
+        </div>
+
+      <!-- Mô tả (Trải dài toàn hàng) -->
+      <div class="form-group full-width">
+        <label class="form-label">Mô tả / Ghi chú</label>
+        <textarea class="form-control textarea-custom" formControlName="description" rows="3" placeholder="Nhập ghi chú bổ sung về khách hàng..."></textarea>
+      </div>
+
+      <!-- Thanh nút bấm hành động (Action Buttons) -->
+      <div class="form-actions">
+        <button type="button" class="btn btn-secondary-custom" (click)="onCancel()">Hủy bỏ</button>
+        <button type="submit" class="btn btn-primary-custom">
+          <i class="bi bi-check-lg"></i> Lưu lại
+        </button>
+      </div>
+    </form>
+  </div>
+
+    <!-- Popup hiển thị lỗi chi tiết -->
+  <div class="modal-backdrop-custom" *ngIf="showErrorModal">
+    <div class="modal-dialog-custom">
+      <div class="modal-header bg-danger text-white">
+        <h5 class="mb-0"><i class="bi bi-exclamation-triangle-fill me-2"></i> Lỗi lưu dữ liệu</h5>
+        <button type="button" class="btn-close btn-close-white" (click)="closeErrorModal()"></button>
+      </div>
+      <div class="modal-body">
+        <p>Không thể lưu thông tin khách hàng vào hệ thống. Chi tiết lỗi từ server:</p>
+        <div class="alert alert-light border font-monospace text-danger p-2" style="max-height: 200px; overflow-y: auto;">
+          {{ errorMessage }}
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" (click)="closeErrorModal()">Đóng</button>
+      </div>
+    </div>
+  </div>
+</div>
+

@@ -1,0 +1,180 @@
+.customer-create-container {
+  padding: 24px;
+  max-width: 1000px; // Giới hạn độ rộng vừa mắt, không bị loãng nội dung
+  margin: 0 auto;
+
+  .page-header {
+    margin-bottom: 20px;
+
+    h2 {
+      font-size: 1.5rem;
+      font-weight: 600;
+      color: #1f2937;
+      margin-bottom: 4px;
+    }
+
+    .page-subtitle {
+      font-size: 0.875rem;
+      color: #6b7280;
+    }
+  }
+
+  /* Khung Card kiểu Azure Surface */
+  .card-surface {
+    background: #ffffff;
+    border: 1px solid #e5e7eb;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
+    padding: 32px;
+
+    .azure-form {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+
+      /* Chia lưới 2 cột cân đối */
+      .form-grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 20px;
+
+        @media (max-width: 768px) {
+          grid-template-columns: 1fr; // Tự động dồn 1 cột trên màn hình nhỏ
+        }
+      }
+
+      .form-group {
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
+
+        &.full-width {
+          grid-column: span 2;
+        }
+
+        .form-label {
+          font-size: 0.875rem;
+          font-weight: 500;
+          color: #374151;
+
+          .required {
+            color: #dc2626;
+          }
+        }
+
+        .form-control {
+          padding: 10px 14px;
+          font-size: 0.9rem;
+          border: 1px solid #d1d5db;
+          border-radius: 6px;
+          background-color: #fff;
+          transition: all 0.2s ease;
+
+          &:focus {
+            outline: none;
+            border-color: #0078D4; // Azure / Microsoft Blue
+            box-shadow: 0 0 0 3px rgba(0, 120, 212, 0.15);
+          }
+
+          &::placeholder {
+            color: #9ca3af;
+          }
+        }
+
+        .textarea-custom {
+          resize: vertical;
+          min-height: 90px;
+        }
+      }
+
+      /* Khối nút bấm căn phải chuẩn Enterprise */
+      .form-actions {
+        display: flex;
+        justify-content: flex-end;
+        gap: 12px;
+        margin-top: 12px;
+        border-top: 1px solid #f3f4f6;
+        padding-top: 20px;
+
+        .btn {
+          display: inline-flex;
+          align-items: center;
+          justify-content: center;
+          gap: 6px;
+          padding: 10px 20px;
+          font-size: 0.9rem;
+          font-weight: 600;
+          border-radius: 6px;
+          cursor: pointer;
+          border: 1px solid transparent;
+          transition: all 0.2s ease;
+        }
+
+        .btn-secondary-custom {
+          background-color: #f3f4f6;
+          color: #374151;
+          border-color: #d1d5db;
+
+          &:hover {
+            background-color: #e5e7eb;
+          }
+        }
+
+        .btn-primary-custom {
+          background-color: #0078D4; // Microsoft Corporate Blue
+          color: #ffffff;
+
+          &:hover {
+            background-color: #106ebe;
+          }
+        }
+      }
+    }
+  }
+}
+
+.modal-backdrop-custom {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1050;
+}
+
+.modal-dialog-custom {
+  background: #fff;
+  width: 100%;
+  max-width: 500px;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  overflow: hidden;
+  animation: fadeIn 0.2s ease-in-out;
+
+  .modal-header {
+    padding: 1rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .modal-body {
+    padding: 1rem;
+  }
+
+  .modal-footer {
+    padding: 0.75rem 1rem;
+    background-color: #f8f9fa;
+    display: flex;
+    justify-content: flex-end;
+  }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
