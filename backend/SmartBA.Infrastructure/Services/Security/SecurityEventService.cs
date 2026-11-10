@@ -3,7 +3,7 @@ using SmartBA.Application.Interfaces.Security;
 using SmartBA.Infrastructure.Persistence;
 using SmartBA.Application.Interfaces;
 using SmartBA.Domain.Entities;
-using SmartBA.Domain.Entities.Auth;
+using SmartBA.Domain.Entities.Authentication;
 
 namespace SmartBA.Infrastructure.Services.Security;
 
@@ -51,7 +51,7 @@ public class SecurityEventService : ISecurityEventService
                     .Headers["User-Agent"]
                     .ToString(),
 
-            EventDate = DateTime.UtcNow,
+            EventDate = DateTime.Now,
 
             IsResolved = false
         };

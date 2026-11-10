@@ -4,8 +4,7 @@ using System.Text;
 using System.Security.Cryptography;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
-using SmartBA.Domain.Entities.Auth;
-using SmartBA.Application.DTOs.Auth;
+using SmartBA.Application.DTOs.Authentication;
 
 namespace SmartBA.Infrastructure.Services.Authentication;
 
@@ -24,7 +23,7 @@ public class JwtService
 
         return Convert.ToBase64String(randomBytes);
     }
-    public string GenerateAccessToken(UserProfileDto user)
+    public string GenerateAccessToken(UserMeProfileDto user)
     {
         var claims = new[]
         {
@@ -62,7 +61,7 @@ public class JwtService
             issuer: _configuration["JwtSettings:Issuer"],
             audience: _configuration["JwtSettings:Audience"],
             claims: claims,
-            expires: DateTime.UtcNow.AddMinutes(15),
+            expires: DateTime.Now.AddMinutes(15),
             signingCredentials: credentials);
 
         return new JwtSecurityTokenHandler()

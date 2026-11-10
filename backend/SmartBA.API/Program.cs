@@ -2,12 +2,13 @@ using Microsoft.EntityFrameworkCore;
 using SmartBA.Infrastructure.Persistence;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.Google;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
 using SmartBA.Application.Interfaces.Security;
 using SmartBA.Application.Interfaces.Email;
 using SmartBA.Infrastructure.Services.Email;
 using SmartBA.Infrastructure.Services.Authentication;
 using SmartBA.Infrastructure.Services.Security;
+using SmartBA.Infrastructure.Services;
+using SmartBA.Application.Interfaces.Projects.Customers;
 
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
@@ -29,23 +30,14 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
 
 //builder.Services.AddOpenApi();
 builder.Services.AddControllers();
-
+builder.Services.AddInfrastructure(
+    builder.Configuration);
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 
 
-// Enable CORS for Angular app - TUANDQ - 29 Oct 2026
 
-builder.Services.AddCors(options =>
-{
-    options.AddPolicy("AngularPolicy", policy =>
-    {
-        policy.WithOrigins("http://localhost:4200")
-              .AllowAnyHeader()
-              .AllowAnyMethod();
-    });
-});
 
 //////////////////////////////////////////////////////////////////
 ///JWT Package - TUANDQ - 29 Oct 2026
@@ -109,6 +101,9 @@ builder.Services
     builder.Services.AddAuthorization();
     builder.Services.AddScoped<JwtService>();
     builder.Services.AddHttpContextAccessor();
+    
+
+
 
     builder.Services.AddScoped<
         IEmailService,
@@ -117,6 +112,23 @@ builder.Services
     builder.Services.AddScoped<
         ISecurityEventService,
         SecurityEventService>();
+
+    builder.Services.AddScoped<
+        ICustomerService, 
+        CustomerService>();
+
+    // Enable CORS for Angular app - TUANDQ - 29 Oct 2026
+    // 1. Thêm dịch vụ CORS trước builder.Build()
+
+    builder.Services.AddCors(options =>
+    {
+        options.AddPolicy("AngularPolicy", policy =>
+        {
+            policy.WithOrigins("http://localhost:4200")
+                .AllowAnyHeader()
+                .AllowAnyMethod();
+        });
+    });
 
     var app = builder.Build();
     app.UseHttpsRedirection();

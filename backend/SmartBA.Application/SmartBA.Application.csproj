@@ -2,8 +2,8 @@
 
   <ItemGroup>
     <ProjectReference Include="..\SmartBA.Domain\SmartBA.Domain.csproj" />
-      <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions"
-                    Version="10.0.0" />
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions"
+                    Version="10.0.0" />      
   </ItemGroup>
 
   <PropertyGroup>

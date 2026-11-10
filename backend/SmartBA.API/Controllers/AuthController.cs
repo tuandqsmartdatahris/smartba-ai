@@ -5,18 +5,15 @@ using Microsoft.EntityFrameworkCore;
 using System.Security.Claims;
 using SmartBA.Infrastructure.Persistence;
 using SmartBA.Domain.Enums;
-using SmartBA.Application.Services;
-using SmartBA.Infrastructure.Services;
 using SmartBA.Application.Helpers;
 using Microsoft.AspNetCore.Authorization;
-using System.Security.Cryptography;
-using System.Text;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
-using SmartBA.Application.DTOs.Auth;
-using SmartBA.Infrastructure.Services.Authentication;
-using SmartBA.Domain.Entities.Auth;
+using SmartBA.Application.DTOs.Authentication;
+using SmartBA.Domain.Entities.Authentication;
 using SmartBA.Application.Interfaces.Email;
-using SmartBA.Application.Interfaces.Auth;
+using SmartBA.Application.Interfaces.Authentication;
+using SmartBA.Infrastructure.Services.Authentication;
+
 
 namespace SmartBA.API.Controllers;
 
@@ -28,18 +25,22 @@ public class AuthController : ControllerBase
     private readonly ApplicationDbContext _db;
     private readonly IEmailService _emailService;
     private readonly JwtService _jwtService;
-    private readonly IUserService _userService;
+    private readonly IUserMeService _userService;
+
+    private readonly IRefreshTokenService _refreshTokenService;
 
     public AuthController(
         ApplicationDbContext db,
         IEmailService emailService,
         JwtService jwtService,
-        IUserService userService)
+        IUserMeService userService,
+        IRefreshTokenService refreshTokenService)
     {
         _db = db;
         _emailService = emailService;
         _jwtService = jwtService;
         _userService = userService;
+        _refreshTokenService = refreshTokenService;
     }
 
     [HttpGet("google-login")]
@@ -77,13 +78,13 @@ public class AuthController : ControllerBase
 
         if (user == null)
         {
-            user = new UserProfileDto
+            user = new User
             {
                 Id = Guid.NewGuid(),
                 Email = email,
                 FullName = fullName ?? "",
                 Role = "Customer",
-                CreatedDate = DateTime.UtcNow,
+                CreatedDate = DateTime.Now,
                 IsActive = true
             };
 
@@ -99,7 +100,7 @@ public class AuthController : ControllerBase
 
         if(lastOtp != null &&
         lastOtp.CreatedDate >
-        DateTime.UtcNow.AddMinutes(-1))
+        DateTime.Now.AddMinutes(-1))
         {
             return BadRequest(
                 "Please wait 60 seconds");
@@ -118,9 +119,9 @@ public class AuthController : ControllerBase
             Id = Guid.NewGuid(),
             Email = email,
             OtpCode = SecurityHelper.HashOtp(otp),
-            ExpireDate = DateTime.UtcNow.AddMinutes(5),
+            ExpireDate = DateTime.Now.AddMinutes(5),
             IsUsed = false,
-            CreatedDate = DateTime.UtcNow
+            CreatedDate = DateTime.Now
         };
 
         _db.UserOtps.Add(userOtp);
@@ -138,7 +139,7 @@ public class AuthController : ControllerBase
     [HttpPost("verify-otp")]
     public async Task<IActionResult>
         VerifyOtp(
-        VerifyOtpRequest request)
+        VerifyOtpRequestDto request)
     {
 
         var user = await _db.Users
@@ -149,8 +150,17 @@ public class AuthController : ControllerBase
             return BadRequest("User not found");
         }
 
+        var _userProfileDto =
+            new UserMeProfileDto
+            {
+                Id = user.Id,
+                Email = user.Email,
+                FullName = user.FullName,
+                Role = user.Role
+            };
+
         if (user.LockUntil.HasValue &&
-            user.LockUntil > DateTime.UtcNow)
+            user.LockUntil > DateTime.Now)
         {
             return BadRequest(
                  "Authentication failed");
@@ -160,7 +170,7 @@ public class AuthController : ControllerBase
             .Where(x =>
                 x.Email == request.Email &&
                 !x.IsUsed &&
-                x.ExpireDate > DateTime.UtcNow)
+                x.ExpireDate > DateTime.Now)
             .OrderByDescending(x => x.CreatedDate)
             .FirstOrDefaultAsync();            
 
@@ -172,7 +182,7 @@ public class AuthController : ControllerBase
                 if (user.FailedAttempts >= 5)
                 {
                     user.LockUntil =
-                     DateTime.UtcNow.AddMinutes(15);
+                     DateTime.Now.AddMinutes(15);
 
                     user.FailedAttempts = 0;
                 }
@@ -183,7 +193,7 @@ public class AuthController : ControllerBase
                             Id = Guid.NewGuid(),
                             UserId = user.Id,
                             SessionId = Guid.Empty,
-                            LoginTime = DateTime.UtcNow,
+                            LoginTime = DateTime.Now,
                             IpAddress =
                                 HttpContext.Connection.RemoteIpAddress?.ToString(),
                             Browser =
@@ -207,7 +217,7 @@ public class AuthController : ControllerBase
             if (user.FailedAttempts >= 5)
             {
                 user.LockUntil =
-                    DateTime.UtcNow.AddMinutes(15);
+                    DateTime.Now.AddMinutes(15);
             }
 
             _db.LoginLogs.Add(new LoginLog
@@ -215,7 +225,7 @@ public class AuthController : ControllerBase
                             Id = Guid.NewGuid(),
                             UserId = user.Id,
                             SessionId = Guid.Empty,
-                            LoginTime = DateTime.UtcNow,
+                            LoginTime = DateTime.Now,
                             IpAddress =
                                 HttpContext.Connection.RemoteIpAddress?.ToString(),
                             Browser =
@@ -230,7 +240,7 @@ public class AuthController : ControllerBase
         }
 
 
-        if (otp.ExpireDate < DateTime.UtcNow)
+        if (otp.ExpireDate < DateTime.Now)
         {
             return BadRequest("Expired OTP");
         }
@@ -247,9 +257,9 @@ public class AuthController : ControllerBase
 
                     Status = SessionStatus.Active,
 
-                    LoginTime = DateTime.UtcNow,
+                    LoginTime = DateTime.Now,
 
-                    LastActivityTime = DateTime.UtcNow,
+                    LastActivityTime = DateTime.Now,
 
                     IsActive = true,
 
@@ -267,7 +277,7 @@ public class AuthController : ControllerBase
                     Id = Guid.NewGuid(),
                     UserId = user.Id,
                     SessionId = session.Id,
-                    LoginTime = DateTime.UtcNow,
+                    LoginTime = DateTime.Now,
                     IpAddress =
                         HttpContext.Connection.RemoteIpAddress?.ToString(),
                     Browser =
@@ -277,7 +287,8 @@ public class AuthController : ControllerBase
                 });
 
         var accessToken =
-            _jwtService.GenerateAccessToken(user);
+            _jwtService.GenerateAccessToken(_userProfileDto);
+
         var refreshToken =
             SecurityHelper.GenerateRefreshToken();
 
@@ -294,9 +305,9 @@ public class AuthController : ControllerBase
 
                             RotationStatus = RefreshTokenStatus.Active,
 
-                            ExpiryDate = DateTime.UtcNow.AddDays(7),
+                            ExpiryDate = DateTime.Now.AddDays(7),
 
-                            CreatedDate = DateTime.UtcNow,
+                            CreatedDate = DateTime.Now,
 
                             IsRevoked = false
                 });
@@ -315,9 +326,18 @@ public class AuthController : ControllerBase
         });
     }
 
+/// <summary>
+/// Đoạn này chính là Refresh Token
+/// 
+/// </summary>
+/// 
+/// Cân phân biệt
+/// Request DTO  ==> Dùng để nhận dữ liệu từ Frontend ==> public class RefreshTokenRequestDto {public string RefreshToken { get; set; } = string.Empty;}
+/// Response DTO ==> Dùng để trả kết quả về Frontend: ==> public class TokenResponseDto {public string AccessToken { get; set; } = string.Empty;public string RefreshToken { get; set; } = string.Empty;}
+    
     [HttpPost("refresh")]
     public async Task<IActionResult> Refresh(
-        [FromBody] RefreshTokenRequest request)
+        [FromBody] RefreshTokenRequestDto request)
     {
         var tokenHash = SecurityHelper.HashToken(
                 request.RefreshToken);
@@ -335,7 +355,7 @@ public class AuthController : ControllerBase
 
         // hết hạn
 
-        if (oldToken.ExpiryDate < DateTime.UtcNow)
+        if (oldToken.ExpiryDate < DateTime.Now)
         {
             oldToken.RotationStatus =
                 RefreshTokenStatus.Expired;
@@ -365,7 +385,7 @@ public class AuthController : ControllerBase
             oldToken.IsRevoked = true;
 
             oldToken.RevokedDate =
-                DateTime.UtcNow;
+                DateTime.Now;
 
             // revoke toàn bộ token của session
 
@@ -381,7 +401,7 @@ public class AuthController : ControllerBase
                 item.IsRevoked = true;
 
                 item.RevokedDate =
-                    DateTime.UtcNow;
+                    DateTime.Now;
 
                 item.RotationStatus =
                     RefreshTokenStatus.Revoked;
@@ -397,16 +417,25 @@ public class AuthController : ControllerBase
             await _db.Users
                 .FirstOrDefaultAsync(x =>
                     x.Id == oldToken.UserId);
-
+        
         if (user == null)
         {
             return Unauthorized();
         }
+        
+        var _userProfileDto =
+            new UserMeProfileDto
+            {
+                Id = user.Id,
+                Email = user.Email,
+                FullName = user.FullName,
+                Role = user.Role
+            };
 
         // JWT mới
 
         var accessToken =
-            _jwtService.GenerateAccessToken(user);
+            _jwtService.GenerateAccessToken(_userProfileDto);
 
         // Refresh mới
 
@@ -434,10 +463,10 @@ public class AuthController : ControllerBase
                     RefreshTokenStatus.Active,
 
                 CreatedDate =
-                    DateTime.UtcNow,
+                    DateTime.Now,
 
                 ExpiryDate =
-                    DateTime.UtcNow.AddDays(7),
+                    DateTime.Now.AddDays(7),
 
                 IsRevoked = false
             };
@@ -447,7 +476,7 @@ public class AuthController : ControllerBase
         oldToken.IsRevoked = true;
 
         oldToken.RevokedDate =
-            DateTime.UtcNow;
+            DateTime.Now;
 
         oldToken.ReplacedByTokenId =
             newRefreshToken.Id;
@@ -465,7 +494,7 @@ public class AuthController : ControllerBase
                     UserId = user.Id,
                     // SessionId = oldToken.Id,
                     SessionId = oldToken.SessionId,
-                    LoginTime = DateTime.UtcNow,
+                    LoginTime = DateTime.Now,
                     IpAddress =
                         HttpContext.Connection.RemoteIpAddress?.ToString(),
                     Browser =
@@ -484,41 +513,44 @@ public class AuthController : ControllerBase
         });
     }
     
+
+    /// <summary>
+    /// Lấy thông tin người dùng hiện tại từ JWT
+    /// Me()
+    /// </summary>
+    /// <returns></returns>
+    /// 
+    /// 
+    
     [Authorize(
     AuthenticationSchemes =
     JwtBearerDefaults.AuthenticationScheme)]
     [HttpGet("me")]
     public async Task<IActionResult> Me()
     {
-        var userId =
-            User.FindFirst(
-                ClaimTypes.NameIdentifier)?.Value;
 
-        if (string.IsNullOrEmpty(userId))
-        {
-            return Unauthorized();
-        }
+         var userIdClaim =
+        User.FindFirst(
+            ClaimTypes.NameIdentifier)?.Value;
 
-        var user =
-            await _db.Users
-                .FirstOrDefaultAsync(x =>
-                    x.Id == Guid.Parse(userId));
+        if (!Guid.TryParse(
+            userIdClaim,
+            out Guid userId))
+            {
+                return Unauthorized();
+            }
 
-        if (user == null)
-        {
-            return NotFound();
-        }
+        var profile =
+            await _userService.GetProfileAsync(
+                userId);
 
-        return Ok(new
-        {
-            user.Id,
-            user.Email,
-            user.FullName,
-            user.Role,
-            user.AvatarUrl,
-            user.IsActive,
-            user.CreatedDate
-        });
+        if (profile == null)
+            {
+                return NotFound();
+            }
+
+        return Ok(profile);
+    
     }
     
     

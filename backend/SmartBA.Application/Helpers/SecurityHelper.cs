@@ -25,7 +25,9 @@ public static class SecurityHelper
 
     public static string HashRefreshToken(string token)
     {
-        return "ok";
+            return Convert.ToHexString(
+                SHA256.HashData(
+                Encoding.UTF8.GetBytes(token)));
     }
 
     public static string GenerateRefreshToken()

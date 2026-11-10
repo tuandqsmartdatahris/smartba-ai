@@ -2,7 +2,6 @@ using Azure.Identity;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Graph;
 using Microsoft.Graph.Models;
-using SmartBA.Application.Services;
 namespace SmartBA.Infrastructure.Services.Email;
 using SmartBA.Application.Interfaces.Email;
 
