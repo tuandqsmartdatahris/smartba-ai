@@ -1,0 +1,19 @@
+services:
+
+  redis:
+    image: redis:7.2
+
+    container_name: smartba-redis
+
+    restart: always
+
+    ports:
+      - "6379:6379"
+
+    command: redis-server --requirepass SmartBA@Redis2026
+
+    volumes:
+      - redis_data:/data
+
+volumes:
+  redis_data:

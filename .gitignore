@@ -42,3 +42,53 @@ __screenshots__/
 # System files
 .DS_Store
 Thumbs.db
+
+# =========================
+# .NET
+# =========================
+**/bin/
+**/obj/
+
+# Visual Studio
+.vs/
+*.user
+*.suo
+
+# Build
+publish/
+out/
+
+# Logs
+*.log
+
+# =========================
+# Angular
+# =========================
+node_modules/
+.angular/
+dist/
+coverage/
+
+# =========================
+# Environment
+# =========================
+.env
+.env.*
+secrets.json
+
+# =========================
+# Certificates
+# =========================
+*.pfx
+*.pem
+*.key
+*.crt
+
+# =========================
+# VS Code
+# =========================
+.vscode/
+
+# OS
+Thumbs.db
+.DS_Store
